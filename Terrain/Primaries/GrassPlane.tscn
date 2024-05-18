@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4h81e74pdf4d"]
+
+[ext_resource type="Material" uid="uid://bybeh1v5hnydf" path="res://Materials/Grass.tres" id="1_nqrw8"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_l2tog"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bq28k"]
+points = PackedVector3Array(-1, 0, 1, 1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[node name="Plane" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_nqrw8")
+mesh = SubResource("PlaneMesh_l2tog")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_bq28k")

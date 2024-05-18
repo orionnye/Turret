@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4v1b1a1c4vnb"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_l2tog"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bq28k"]
+points = PackedVector3Array(-1, 0, 1, 1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[node name="Plane" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_l2tog")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_bq28k")

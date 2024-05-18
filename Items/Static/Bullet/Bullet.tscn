@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://bgai6qvwicivy"]
+
+[ext_resource type="Material" uid="uid://c786wrb72vpw6" path="res://Materials/Metals/Metal.tres" id="1_7m681"]
+[ext_resource type="Script" path="res://Items/Static/Bullet/Bullet.cs" id="1_ovu4u"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_t6gvb"]
+radius = 0.1
+height = 0.2
+radial_segments = 6
+rings = 2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5nqnx"]
+radius = 0.1
+
+[node name="Bullet" type="RigidBody3D"]
+mass = 0.1
+script = ExtResource("1_ovu4u")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_7m681")
+mesh = SubResource("SphereMesh_t6gvb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_5nqnx")

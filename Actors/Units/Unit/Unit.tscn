@@ -1,0 +1,143 @@
+[gd_scene load_steps=12 format=3 uid="uid://dvy0lplevkacu"]
+
+[ext_resource type="Script" path="res://Actors/Units/Unit/Unit.cs" id="1_w5xix"]
+[ext_resource type="PackedScene" uid="uid://ijwr6hhab1ji" path="res://Items/Static/Glass/Glass.tscn" id="2_fi250"]
+
+[sub_resource type="Animation" id="Animation_y8mki"]
+resource_name = "WalkBouncy"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.2, 1, -0.276304, -0.0620274, 0, 0.4, 1, 0.14379, -0.115597, 0, 0.6, 1, 0, 0, 0)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Mesh")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.2, 1, 0, 0, 0.070627, 0.997503, 0.4, 1, 0, 0, -0.0458425, 0.998949, 0.6, 1, 0, 0, 0, 1)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yx6gy"]
+_data = {
+"WalkBouncy": SubResource("Animation_y8mki")
+}
+
+[sub_resource type="BoxMesh" id="BoxMesh_7puv2"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_rppfj"]
+top_radius = 0.4
+bottom_radius = 0.2
+height = 0.75
+radial_segments = 5
+rings = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_27rs7"]
+size = Vector3(0.3, 0.5, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fs76h"]
+size = Vector3(1, 0.4, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pgh1f"]
+size = Vector3(0.3, 0.6, 0.3)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rf8c0"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_oavyo"]
+radius = 0.835918
+
+[node name="Unit" type="RigidBody3D" groups=["Units"]]
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+script = ExtResource("1_w5xix")
+speed = 0.2
+contentment = 0.2
+curiosity = 1.0
+item = ExtResource("2_fi250")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+process_mode = 3
+autoplay = "WalkBouncy"
+reset_on_save = false
+method_call_mode = 1
+libraries = {
+"": SubResource("AnimationLibrary_yx6gy")
+}
+
+[node name="Mesh" type="Node3D" parent="."]
+transform = Transform3D(0.996362, 0.0852194, 0, -0.0852194, 0.996362, 0, 0, 0, 1, 0.133766, -0.107538, 0)
+
+[node name="Head" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(-1, -5.48932e-09, -8.72503e-08, 0, 0.998027, -0.0627905, 8.74228e-08, -0.0627905, -0.998027, 0, 0.461, -0.318)
+mesh = SubResource("BoxMesh_7puv2")
+
+[node name="Glass" parent="Mesh/Head" instance=ExtResource("2_fi250")]
+transform = Transform3D(0.449105, -0.536533, -0.0209007, 0.535571, 0.449565, -0.0324841, 0.0383214, 0.00484993, 0.698933, -0.119165, 0.0854557, 0.245739)
+skeleton = NodePath("../../..")
+
+[node name="Glass2" parent="Mesh/Head" instance=ExtResource("2_fi250")]
+transform = Transform3D(0.640933, -0.264479, 0.0962052, 0.27959, 0.571032, -0.292834, 0.0321607, 0.30655, 0.628484, 0.117097, 0.0816015, 0.232096)
+skeleton = NodePath("../../..")
+
+[node name="Glass3" parent="Mesh/Head" instance=ExtResource("2_fi250")]
+transform = Transform3D(0.0463765, -0.176063, 0.675907, 0.576172, 0.392545, 0.0627186, -0.39481, 0.552186, 0.170925, 0.145775, -0.195538, 0.226399)
+skeleton = NodePath("../../..")
+
+[node name="Glass4" parent="Mesh/Head" instance=ExtResource("2_fi250")]
+transform = Transform3D(-0.184505, 0.322686, 0.593154, -0.330792, 0.492868, -0.371023, -0.588672, -0.378094, 0.0225784, -0.116419, -0.177682, 0.222335)
+skeleton = NodePath("../../..")
+
+[node name="Body" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(-1, -2.24793e-08, -8.44833e-08, 0, 0.966376, -0.257133, 8.74228e-08, -0.257133, -0.966376, 0, 0.007, 0.047)
+mesh = SubResource("CylinderMesh_rppfj")
+
+[node name="R_Leg" type="MeshInstance3D" parent="Mesh/Body"]
+transform = Transform3D(-0.0657974, -0.000227109, -0.997833, 0.285434, 0.95821, -0.0190395, 0.956138, -0.286068, -0.0629824, -0.220948, -0.527606, 0.212976)
+mesh = SubResource("BoxMesh_27rs7")
+skeleton = NodePath("../..")
+
+[node name="L_Leg" type="MeshInstance3D" parent="Mesh/Body"]
+transform = Transform3D(0.999348, -0.0311569, 0.0182303, 0.0248077, 0.95963, 0.28017, -0.0262237, -0.279535, 0.959778, 0.253561, -0.514669, 0.284309)
+mesh = SubResource("BoxMesh_27rs7")
+skeleton = NodePath("../..")
+
+[node name="Shoulders" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(-1, 2.30685e-08, -8.43243e-08, 0, 0.964557, 0.263873, 8.74228e-08, 0.263873, -0.964557, 0, 0.37, -0.048)
+mesh = SubResource("BoxMesh_fs76h")
+
+[node name="L_upperArm" type="MeshInstance3D" parent="Mesh/Shoulders"]
+transform = Transform3D(0.920675, -0.349432, 0.173939, 0.39033, 0.82421, -0.410272, -3.72529e-08, 0.44562, 0.895224, 0.580423, -0.241943, -0.0544303)
+mesh = SubResource("BoxMesh_pgh1f")
+
+[node name="L_lowerArm" type="MeshInstance3D" parent="Mesh/Shoulders/L_upperArm"]
+transform = Transform3D(0.846927, 0.51907, 0.115246, -0.531709, 0.826795, 0.183568, -1.3411e-07, -0.216747, 0.976228, -0.150499, -0.454428, 0.0702521)
+mesh = SubResource("BoxMesh_pgh1f")
+skeleton = NodePath("../..")
+
+[node name="R_upperArm" type="MeshInstance3D" parent="Mesh/Shoulders"]
+transform = Transform3D(0.931875, 0.308657, -0.190631, -0.36278, 0.79285, -0.489675, -7.45058e-09, 0.525472, 0.850812, -0.575412, -0.202955, -0.00298929)
+mesh = SubResource("BoxMesh_pgh1f")
+
+[node name="R_lowerArm" type="MeshInstance3D" parent="Mesh/Shoulders/R_upperArm"]
+transform = Transform3D(0.885044, -0.441237, -0.148347, 0.465506, 0.838901, 0.282044, 1.49012e-07, -0.318678, 0.947863, 0.138059, -0.453066, 0.0865333)
+mesh = SubResource("BoxMesh_pgh1f")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_rf8c0")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CylinderShape3D_oavyo")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

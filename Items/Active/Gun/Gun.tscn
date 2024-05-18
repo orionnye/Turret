@@ -1,0 +1,131 @@
+[gd_scene load_steps=14 format=3 uid="uid://d3usnlgmakppf"]
+
+[ext_resource type="Material" uid="uid://c786wrb72vpw6" path="res://Materials/Metals/Metal.tres" id="1_gujde"]
+[ext_resource type="Script" path="res://Items/Active/Gun/Gun.cs" id="1_qkc5h"]
+[ext_resource type="Material" uid="uid://byevivsctpdgd" path="res://Materials/Matte/Black_Matte.tres" id="2_ktmhl"]
+[ext_resource type="PackedScene" uid="uid://bgai6qvwicivy" path="res://Items/Static/Bullet/Bullet.tscn" id="2_nuv3k"]
+[ext_resource type="Material" uid="uid://bb5hwfky6hw6d" path="res://Materials/Metals/Tarnished.tres" id="2_puy6m"]
+
+[sub_resource type="Animation" id="Animation_0pk8e"]
+resource_name = "Fire"
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh/Barrel")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.707107, 0, 0, 0.707107)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Mesh/Barrel")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0.541473, 0.1, 1, 0, 0, -0.505553, 0.2, 1, 0, 0, -0.505553, 0.8, 1, 0, 0, 0.541473)
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Mesh")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 0, 2)
+tracks/3/type = "rotation_3d"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Mesh")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
+tracks/4/type = "position_3d"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Mesh/Body/Rack2")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = PackedFloat32Array(0, 1, 0.14833, 0.117278, -0.0824128, 0.1, 1, 0.230075, 0.276949, 0.335949, 0.2, 1, 0.230075, 0.276949, 0.335949, 0.9, 1, 0.14833, 0.117278, -0.0824128)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2j6a0"]
+_data = {
+"Fire": SubResource("Animation_0pk8e")
+}
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pr2nc"]
+top_radius = 0.1
+bottom_radius = 0.1
+radial_segments = 16
+
+[sub_resource type="PrismMesh" id="PrismMesh_y0nrp"]
+size = Vector3(0.3, 0.3, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_33v15"]
+size = Vector3(0.7, 0.5, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7vq8x"]
+size = Vector3(0.7, 0.3, 0.15)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vcp6t"]
+size = Vector3(0.3, 0.3, 2.14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dfgai"]
+size = Vector3(0.15, 0.1, 1.5)
+
+[node name="Gun" type="Node3D" node_paths=PackedStringArray("anim")]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("1_qkc5h")
+bulletSpeed = 40.0
+barrelExit = Vector3(0, 0, 3)
+bulletScene = ExtResource("2_nuv3k")
+anim = NodePath("AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+speed_scale = 3.0
+libraries = {
+"": SubResource("AnimationLibrary_2j6a0")
+}
+
+[node name="Mesh" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="Barrel" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.541473)
+material_override = ExtResource("1_gujde")
+mesh = SubResource("CylinderMesh_pr2nc")
+skeleton = NodePath("../..")
+
+[node name="Stabilizer" type="MeshInstance3D" parent="Mesh/Barrel"]
+transform = Transform3D(3.55271e-15, 4.37114e-08, -1, -8.74228e-08, -1, -4.37114e-08, -1, 8.74228e-08, 1.91069e-15, 0, 0.8, -3.49691e-08)
+material_override = ExtResource("2_ktmhl")
+mesh = SubResource("PrismMesh_y0nrp")
+skeleton = NodePath("../..")
+
+[node name="Mag" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, -0.4, -1)
+material_override = ExtResource("1_gujde")
+mesh = SubResource("BoxMesh_33v15")
+skeleton = NodePath("../Barrel")
+
+[node name="Detail" type="MeshInstance3D" parent="Mesh/Mag"]
+transform = Transform3D(1, 0, -7.7647e-23, 1.77636e-15, 1, 0, 0, 0, 1, 0.0726433, 0, 0.000288606)
+material_override = ExtResource("2_ktmhl")
+mesh = SubResource("BoxMesh_7vq8x")
+skeleton = NodePath("../../Barrel")
+
+[node name="Body" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.23106)
+material_override = ExtResource("2_puy6m")
+mesh = SubResource("BoxMesh_vcp6t")
+
+[node name="Rack" type="MeshInstance3D" parent="Mesh/Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0542898, 0.111352, -0.133646)
+material_override = ExtResource("1_gujde")
+mesh = SubResource("BoxMesh_dfgai")
+
+[node name="Rack2" type="MeshInstance3D" parent="Mesh/Body"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.14833, 0.117278, -0.0824128)
+material_override = ExtResource("1_gujde")
+mesh = SubResource("BoxMesh_dfgai")
+
+[node name="Rack3" type="MeshInstance3D" parent="Mesh/Body"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.186684, -0.0128438, -0.124554)
+material_override = ExtResource("1_gujde")
+mesh = SubResource("BoxMesh_dfgai")

@@ -1,0 +1,133 @@
+[gd_scene load_steps=6 format=3 uid="uid://xrpexrx7u5wr"]
+
+[ext_resource type="Script" path="res://Environment/Domain/Domain.cs" id="1_0cqmi"]
+[ext_resource type="PackedScene" uid="uid://c4v1b1a1c4vnb" path="res://Terrain/Primaries/Plane.tscn" id="3_a7cqa"]
+[ext_resource type="PackedScene" uid="uid://dvy0lplevkacu" path="res://Actors/Units/Unit/Unit.tscn" id="4_1h12i"]
+[ext_resource type="PackedScene" uid="uid://b8ylv0l52enw8" path="res://Terrain/Primaries/Cube.tscn" id="4_36bfm"]
+[ext_resource type="PackedScene" uid="uid://hgqtjij5ji1a" path="res://Actors/Turrets/Default/Default.tscn" id="5_x0sag"]
+
+[node name="Domain" type="Node3D" node_paths=PackedStringArray("Actors")]
+script = ExtResource("1_0cqmi")
+Actors = NodePath("Actors")
+defaultUnit = ExtResource("4_1h12i")
+spawnRadius = 11.0
+spawnTimer = 2.0
+count = 20.0
+
+[node name="Terrain" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Terrain"]
+transform = Transform3D(0.597315, 0.41497, 0.686305, -0.755933, 0.00543836, 0.654626, 0.267918, -0.909819, 0.316938, 8.87533, 11.8994, 0.364503)
+
+[node name="Floor" type="Node3D" parent="Terrain"]
+
+[node name="Plane" parent="Terrain/Floor" instance=ExtResource("3_a7cqa")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+
+[node name="Plane2" parent="Terrain/Floor" instance=ExtResource("3_a7cqa")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 10, 0, 0)
+
+[node name="Plane3" parent="Terrain/Floor" instance=ExtResource("3_a7cqa")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -10, 0, 0)
+
+[node name="Plane4" parent="Terrain/Floor" instance=ExtResource("3_a7cqa")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 10)
+
+[node name="Plane5" parent="Terrain/Floor" instance=ExtResource("3_a7cqa")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 10, 0, 10)
+
+[node name="Plane6" parent="Terrain/Floor" instance=ExtResource("3_a7cqa")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -10, 0, 10)
+
+[node name="Plane7" parent="Terrain/Floor" instance=ExtResource("3_a7cqa")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -10, 0, -10)
+
+[node name="Plane8" parent="Terrain/Floor" instance=ExtResource("3_a7cqa")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, -10)
+
+[node name="Plane9" parent="Terrain/Floor" instance=ExtResource("3_a7cqa")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 10, 0, -10)
+
+[node name="Plane10" parent="Terrain/Floor" instance=ExtResource("3_a7cqa")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 20, 0, 0)
+
+[node name="Plane11" parent="Terrain/Floor" instance=ExtResource("3_a7cqa")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 20, 0, 10)
+
+[node name="Plane12" parent="Terrain/Floor" instance=ExtResource("3_a7cqa")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 20, 0, -10)
+
+[node name="Plane13" parent="Terrain/Floor" instance=ExtResource("3_a7cqa")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -20, 0, 0)
+
+[node name="Plane14" parent="Terrain/Floor" instance=ExtResource("3_a7cqa")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -20, 0, 10)
+
+[node name="Plane15" parent="Terrain/Floor" instance=ExtResource("3_a7cqa")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -20, 0, -10)
+
+[node name="Walls" type="Node3D" parent="Terrain"]
+
+[node name="Cube" parent="Terrain/Walls" instance=ExtResource("4_36bfm")]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 2, -25)
+
+[node name="Cube2" parent="Terrain/Walls" instance=ExtResource("4_36bfm")]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 20, 2, -25)
+
+[node name="Cube3" parent="Terrain/Walls" instance=ExtResource("4_36bfm")]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, -20, 2, -25)
+
+[node name="Cube4" parent="Terrain/Walls" instance=ExtResource("4_36bfm")]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, -35, 2, 10)
+
+[node name="Cube5" parent="Terrain/Walls" instance=ExtResource("4_36bfm")]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, -35, 2, -10)
+
+[node name="Cube6" parent="Terrain/Walls" instance=ExtResource("4_36bfm")]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 2, 25)
+
+[node name="Cube7" parent="Terrain/Walls" instance=ExtResource("4_36bfm")]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, -20, 2, 25)
+
+[node name="Cube8" parent="Terrain/Walls" instance=ExtResource("4_36bfm")]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 20, 2, 25)
+
+[node name="Cube9" parent="Terrain/Walls" instance=ExtResource("4_36bfm")]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 35, 2, 10)
+
+[node name="Cube10" parent="Terrain/Walls" instance=ExtResource("4_36bfm")]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 35, 2, -10)
+
+[node name="Default" parent="." instance=ExtResource("5_x0sag")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+maxGain = 10.0
+dampPassive = 3.0
+
+[node name="Actors" type="Node3D" parent="."]
+
+[node name="Unit" parent="Actors" instance=ExtResource("4_1h12i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.016, 1, -9)
+
+[node name="RoundEnd" type="RichTextLabel" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -143.5
+offset_right = 143.5
+offset_bottom = 76.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/normal_font_size = 48
+text = "Round Over"
+fit_content = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 25, 0)
+current = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

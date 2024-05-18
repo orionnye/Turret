@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://df03dnnygjns6"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -243.0
+offset_right = 243.0
+offset_bottom = 208.0
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 151
+text = "Turret"
+fit_content = true
+scroll_active = false
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -252.0
+offset_right = 318.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 61
+text = "Activate"
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -296.0
+offset_top = -260.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 41
+text = "Deactivate"

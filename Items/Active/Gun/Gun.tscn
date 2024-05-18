@@ -78,6 +78,7 @@ bulletScene = ExtResource("2_nuv3k")
 anim = NodePath("AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+reset_on_save = false
 speed_scale = 3.0
 libraries = {
 "": SubResource("AnimationLibrary_2j6a0")

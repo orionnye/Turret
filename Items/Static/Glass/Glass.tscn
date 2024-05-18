@@ -1,27 +1,35 @@
-[gd_scene load_steps=5 format=3 uid="uid://ijwr6hhab1ji"]
+[gd_scene load_steps=6 format=3 uid="uid://ijwr6hhab1ji"]
 
 [ext_resource type="Material" uid="uid://c1tevbx05cr88" path="res://Materials/Glass.tres" id="1_re87c"]
 [ext_resource type="Script" path="res://Items/Static/Glass/Glass.cs" id="2_hp54j"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_pgkrw"]
-radius = 0.2
-height = 0.5
-radial_segments = 4
-rings = 1
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_8oge1"]
 radius = 1.12416
 
-[node name="Glass" type="MeshInstance3D" groups=["Glass"]]
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
-material_override = ExtResource("1_re87c")
-mesh = SubResource("SphereMesh_pgkrw")
+[sub_resource type="BoxShape3D" id="BoxShape3D_q28qn"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[sub_resource type="SphereMesh" id="SphereMesh_fd12r"]
+material = ExtResource("1_re87c")
+radius = 0.3
+height = 0.6
+radial_segments = 4
+rings = 1
+
+[node name="Glass" type="RigidBody3D" groups=["Glass"]]
 script = ExtResource("2_hp54j")
 
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("SphereShape3D_8oge1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_q28qn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.247162, 0.703422, 0.666415, 0.59761, 0.430714, -0.676275, -0.762741, 0.565406, -0.313916, 0, 0, 0)
+mesh = SubResource("SphereMesh_fd12r")
 
 [connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]

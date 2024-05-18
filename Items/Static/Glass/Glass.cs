@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Linq;
 
-public partial class Glass : MeshInstance3D
+public partial class Glass : RigidBody3D
 {
 	public float rotSpeed = 0.01f;
 	public float rotSpeedHigh = 0.03f;

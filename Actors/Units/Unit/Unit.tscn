@@ -70,27 +70,15 @@ libraries = {
 }
 
 [node name="Mesh" type="Node3D" parent="."]
-transform = Transform3D(0.996362, 0.0852194, 0, -0.0852194, 0.996362, 0, 0, 0, 1, 0.133766, -0.107538, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Head" type="MeshInstance3D" parent="Mesh"]
-transform = Transform3D(-1, -5.48932e-09, -8.72503e-08, 0, 0.998027, -0.0627905, 8.74228e-08, -0.0627905, -0.998027, 0, 0.461, -0.318)
+transform = Transform3D(-0.999953, -5.92321e-05, -0.0096966, -0.000549637, 0.998721, 0.0505785, 0.00968119, 0.0505815, -0.998673, 0.0207883, 0.217948, -0.498166)
 mesh = SubResource("BoxMesh_7puv2")
 
 [node name="Glass" parent="Mesh/Head" instance=ExtResource("2_fi250")]
-transform = Transform3D(0.449105, -0.536533, -0.0209007, 0.535571, 0.449565, -0.0324841, 0.0383214, 0.00484993, 0.698933, -0.119165, 0.0854557, 0.245739)
-skeleton = NodePath("../../..")
-
-[node name="Glass2" parent="Mesh/Head" instance=ExtResource("2_fi250")]
-transform = Transform3D(0.640933, -0.264479, 0.0962052, 0.27959, 0.571032, -0.292834, 0.0321607, 0.30655, 0.628484, 0.117097, 0.0816015, 0.232096)
-skeleton = NodePath("../../..")
-
-[node name="Glass3" parent="Mesh/Head" instance=ExtResource("2_fi250")]
-transform = Transform3D(0.0463765, -0.176063, 0.675907, 0.576172, 0.392545, 0.0627186, -0.39481, 0.552186, 0.170925, 0.145775, -0.195538, 0.226399)
-skeleton = NodePath("../../..")
-
-[node name="Glass4" parent="Mesh/Head" instance=ExtResource("2_fi250")]
-transform = Transform3D(-0.184505, 0.322686, 0.593154, -0.330792, 0.492868, -0.371023, -0.588672, -0.378094, 0.0225784, -0.116419, -0.177682, 0.222335)
-skeleton = NodePath("../../..")
+transform = Transform3D(0.999754, -0.00425023, -0.021765, -0.00148882, 0.966383, -0.257103, 0.022126, 0.257073, 0.966139, -2.98023e-08, 0.0173967, 0.276515)
+freeze = true
 
 [node name="Body" type="MeshInstance3D" parent="Mesh"]
 transform = Transform3D(-1, -2.24793e-08, -8.44833e-08, 0, 0.966376, -0.257133, 8.74228e-08, -0.257133, -0.966376, 0, 0.007, 0.047)
@@ -107,24 +95,24 @@ mesh = SubResource("BoxMesh_27rs7")
 skeleton = NodePath("../..")
 
 [node name="Shoulders" type="MeshInstance3D" parent="Mesh"]
-transform = Transform3D(-1, 2.30685e-08, -8.43243e-08, 0, 0.964557, 0.263873, 8.74228e-08, 0.263873, -0.964557, 0, 0.37, -0.048)
+transform = Transform3D(-0.999965, -0.00181571, 0.00819991, -0.00041233, 0.985786, 0.168001, -0.0083884, 0.167992, -0.985752, 0, 0.37, -0.158807)
 mesh = SubResource("BoxMesh_fs76h")
 
 [node name="L_upperArm" type="MeshInstance3D" parent="Mesh/Shoulders"]
-transform = Transform3D(0.920675, -0.349432, 0.173939, 0.39033, 0.82421, -0.410272, -3.72529e-08, 0.44562, 0.895224, 0.580423, -0.241943, -0.0544303)
+transform = Transform3D(0.916501, -0.347398, 0.198347, 0.376621, 0.916467, -0.13509, -0.134847, 0.198511, 0.97078, 0.588071, -0.189678, 0.0934099)
 mesh = SubResource("BoxMesh_pgh1f")
 
 [node name="L_lowerArm" type="MeshInstance3D" parent="Mesh/Shoulders/L_upperArm"]
-transform = Transform3D(0.846927, 0.51907, 0.115246, -0.531709, 0.826795, 0.183568, -1.3411e-07, -0.216747, 0.976228, -0.150499, -0.454428, 0.0702521)
+transform = Transform3D(0.825824, 0.521631, 0.214281, -0.563226, 0.743979, 0.359545, 0.0281292, -0.417611, 0.908191, -0.15085, -0.457238, 0.065511)
 mesh = SubResource("BoxMesh_pgh1f")
 skeleton = NodePath("../..")
 
 [node name="R_upperArm" type="MeshInstance3D" parent="Mesh/Shoulders"]
-transform = Transform3D(0.931875, 0.308657, -0.190631, -0.36278, 0.79285, -0.489675, -7.45058e-09, 0.525472, 0.850812, -0.575412, -0.202955, -0.00298929)
+transform = Transform3D(0.935203, 0.312618, -0.16633, -0.344666, 0.911362, -0.225003, 0.0812467, 0.267752, 0.960058, -0.566625, -0.141022, 0.159968)
 mesh = SubResource("BoxMesh_pgh1f")
 
 [node name="R_lowerArm" type="MeshInstance3D" parent="Mesh/Shoulders/R_upperArm"]
-transform = Transform3D(0.885044, -0.441237, -0.148347, 0.465506, 0.838901, 0.282044, 1.49012e-07, -0.318678, 0.947863, 0.138059, -0.453066, 0.0865333)
+transform = Transform3D(0.868757, -0.449519, -0.207831, 0.492035, 0.735815, 0.465271, -0.0562227, -0.506468, 0.860424, 0.138029, -0.449723, 0.0909294)
 mesh = SubResource("BoxMesh_pgh1f")
 skeleton = NodePath("../..")
 

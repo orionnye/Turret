@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3 uid="uid://baohtgq4giedm"]
+
+[ext_resource type="Texture2D" uid="uid://wfom02gtl1c6" path="res://UI/Icons/Turret.png" id="1_tp7lo"]
+[ext_resource type="Script" path="res://UI/Menu/PropertyControl/PropertyControl.cs" id="1_yaowo"]
+
+[node name="ColorRect" type="AspectRatioContainer" node_paths=PackedStringArray("valueDisplay")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+ratio = 2.0
+script = ExtResource("1_yaowo")
+valueDisplay = NodePath("PropertyControl/VBoxContainer/RichTextLabel")
+
+[node name="PropertyControl" type="HBoxContainer" parent="."]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PropertyControl"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="PropertyControl/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("1_tp7lo")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PropertyControl/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 82
+text = "1"
+
+[node name="Button" type="Button" parent="PropertyControl"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 380
+text = "+"
+
+[node name="Button2" type="Button" parent="PropertyControl"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 451
+text = "-"
+
+[connection signal="pressed" from="PropertyControl/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="PropertyControl/Button2" to="." method="_on_button_2_pressed"]

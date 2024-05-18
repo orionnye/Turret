@@ -70,6 +70,7 @@ public partial class Unit : RigidBody3D {
 		for (int i = 0; i < cost; i++) {
 			Glass glass = (Glass)item.Instantiate();
 			glass.grabbed = false;
+			glass.Freeze = false;
 			glass.Position = GlobalPosition;
 			GetTree().Root.AddChild(glass);
 		}

@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://hgqtjij5ji1a"]
+[gd_scene load_steps=16 format=3 uid="uid://hgqtjij5ji1a"]
 
 [ext_resource type="PackedScene" uid="uid://d3usnlgmakppf" path="res://Items/Active/Gun/Gun.tscn" id="1_8oxyt"]
 [ext_resource type="Material" uid="uid://c786wrb72vpw6" path="res://Materials/Metals/Metal.tres" id="1_jja0o"]
 [ext_resource type="Script" path="res://Actors/Turrets/Default/Turret.cs" id="1_yyfay"]
 [ext_resource type="Material" uid="uid://bb5hwfky6hw6d" path="res://Materials/Metals/Tarnished.tres" id="2_mapg7"]
 [ext_resource type="Material" uid="uid://c1tevbx05cr88" path="res://Materials/Glass.tres" id="5_4iogw"]
+[ext_resource type="PackedScene" uid="uid://baohtgq4giedm" path="res://UI/Menu/PropertyControl/PropertyControl.tscn" id="6_jwdre"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_tjrqj"]
 size = Vector3(0.5, 0.5, 0.5)
@@ -32,10 +33,14 @@ size = Vector3(0.1, 0.6, 0.6)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_7tjso"]
 radius = 0.518579
 
-[node name="Default" type="Node3D" node_paths=PackedStringArray("gun") groups=["Turrets"]]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_20lhj"]
+load_path = "res://.godot/imported/Turret.png-0f921d0abf6da44ee565d7ddcea9bab9.ctex"
+
+[node name="Default" type="Node3D" node_paths=PackedStringArray("gun", "glassDisplay") groups=["Turrets"]]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.1, 0)
 script = ExtResource("1_yyfay")
 gun = NodePath("Head/Gun")
+glassDisplay = NodePath("GlassSoul/RichTextLabel")
 
 [node name="Head" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.748976, 0)
@@ -98,6 +103,21 @@ transform = Transform3D(0.998855, 0.047771, 0.00276424, -0.0478504, 0.997445, 0.
 material_override = ExtResource("2_mapg7")
 mesh = SubResource("BoxMesh_lw8mc")
 
+[node name="ColorRect" parent="Body" instance=ExtResource("6_jwdre")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+offset_left = -385.0
+offset_top = 4.0
+offset_right = 381.0
+offset_bottom = 1157.0
+grow_horizontal = 0
+grow_vertical = 1
+scale = Vector2(0.5, 0.17)
+ratio = 0.6985
+alignment_horizontal = 2
+alignment_vertical = 0
+
 [node name="Hitbox" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
@@ -106,6 +126,23 @@ shape = SubResource("CylinderShape3D_7tjso")
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
+
+[node name="GlassSoul" type="HBoxContainer" parent="."]
+anchors_preset = -1
+anchor_right = 0.112847
+anchor_bottom = 0.0987654
+
+[node name="TextureRect" type="TextureRect" parent="GlassSoul"]
+modulate = Color(1, 1, 0, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("CompressedTexture2D_20lhj")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="GlassSoul"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+metadata/_edit_use_anchors_ = true
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

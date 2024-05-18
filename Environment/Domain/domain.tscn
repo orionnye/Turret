@@ -108,20 +108,6 @@ dampPassive = 3.0
 [node name="Unit" parent="Actors" instance=ExtResource("4_1h12i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.016, 1, -9)
 
-[node name="RoundEnd" type="RichTextLabel" parent="."]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -143.5
-offset_right = 143.5
-offset_bottom = 76.0
-grow_horizontal = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_font_sizes/normal_font_size = 48
-text = "Round Over"
-fit_content = true
-
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true

@@ -17,6 +17,9 @@ public partial class Turret : Node3D {
 	// Access to Components 
 	public RigidBody3D head;
 
+	// Currency Control
+	public int glass = 10;
+	[Export] public RichTextLabel glassDisplay;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
@@ -125,6 +128,18 @@ public partial class Turret : Node3D {
 	}
 	private void _on_area_3d_body_entered(Node3D body) {
 		// Replace with function body.
+		if (body.GetType() == typeof(Bullet)) {
+			body.QueueFree();
+			// Implement taking Damage and Health
+			// Die();
+		}
+		// Replace with function body.
+		GD.Print("collectingGlass?");
+		if (body.GetType() == typeof(Glass)) {
+			glass += 1;
+			glassDisplay.Text = glass.ToString();
+			body.QueueFree();
+		}
 	}
 	private void _on_timer_timeout() {
 		// Replace with function body.
@@ -132,5 +147,3 @@ public partial class Turret : Node3D {
 		// GD.Print("Fire Bullet!!!");
 	}
 }
-
-

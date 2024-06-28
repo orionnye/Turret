@@ -99,9 +99,6 @@ transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 35, 2, 10)
 transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 35, 2, -10)
 
 [node name="Default" parent="." instance=ExtResource("5_x0sag")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-maxGain = 10.0
-dampPassive = 3.0
 
 [node name="Actors" type="Node3D" parent="."]
 
@@ -114,6 +111,5 @@ autostart = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 25, 0)
-current = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

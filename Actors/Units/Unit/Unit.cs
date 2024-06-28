@@ -6,7 +6,7 @@ using System.Threading;
 public partial class Unit : RigidBody3D {
 	// Persistance Stats
 	[Export] public int health = 1;
-	[Export] public float maxHealth = 1;
+	[Export] public float maxHealth = 2;
 	[Export] public int cost = 2;
 	
 	// Navigation stats
@@ -50,7 +50,6 @@ public partial class Unit : RigidBody3D {
 		}
 		return motion;
 	}
-
 	private void getRandomPos() {
 		Vector3 desiredPos = Position;
 		// This function returns a random deviation from current position, not ideal, great place holder
@@ -114,7 +113,10 @@ public partial class Unit : RigidBody3D {
 		// Replace with function body.
 		if (body.GetType() == typeof(Bullet)) {
 			body.QueueFree();
-			Die();
+			health -= 1;
+			if (health <= 0) {
+				Die();
+			}
 		}
 	}
 }

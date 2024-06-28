@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjvm5dlwemmoo"]
+
+[ext_resource type="Script" path="res://UI/Menu/Tabs/DisplayProperty.cs" id="1_sexu4"]
+
+[node name="DisplayProp" type="PanelContainer"]
+script = ExtResource("1_sexu4")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+color = Color(0.882353, 0.631373, 0, 1)
+
+[node name="HoriContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="HoriContainer"]
+layout_mode = 2
+text = "LaBeL gOeS hErE: "
+
+[node name="Text" type="RichTextLabel" parent="HoriContainer"]
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TeXt GoEs HeRe"
+scroll_active = false
+autowrap_mode = 0

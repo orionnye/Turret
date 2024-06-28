@@ -54,10 +54,10 @@ radius = 0.835918
 [node name="Unit" type="RigidBody3D" groups=["Units"]]
 axis_lock_angular_x = true
 axis_lock_angular_z = true
+can_sleep = false
 script = ExtResource("1_w5xix")
 speed = 0.2
-contentment = 0.2
-curiosity = 1.0
+contentment = 0.1
 item = ExtResource("2_fi250")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -70,14 +70,13 @@ libraries = {
 }
 
 [node name="Mesh" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Head" type="MeshInstance3D" parent="Mesh"]
 transform = Transform3D(-0.999953, -5.92321e-05, -0.0096966, -0.000549637, 0.998721, 0.0505785, 0.00968119, 0.0505815, -0.998673, 0.0207883, 0.217948, -0.498166)
 mesh = SubResource("BoxMesh_7puv2")
 
 [node name="Glass" parent="Mesh/Head" instance=ExtResource("2_fi250")]
-transform = Transform3D(0.999754, -0.00425023, -0.021765, -0.00148882, 0.966383, -0.257103, 0.022126, 0.257073, 0.966139, -2.98023e-08, 0.0173967, 0.276515)
+transform = Transform3D(0.999754, -0.00425023, -0.021765, -0.00148882, 0.966383, -0.257103, 0.022126, 0.257073, 0.966139, -3.1665e-08, 0.0173967, 0.276515)
 freeze = true
 
 [node name="Body" type="MeshInstance3D" parent="Mesh"]

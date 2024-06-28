@@ -1,11 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://hgqtjij5ji1a"]
+[gd_scene load_steps=22 format=3 uid="uid://hgqtjij5ji1a"]
 
 [ext_resource type="PackedScene" uid="uid://d3usnlgmakppf" path="res://Items/Active/Gun/Gun.tscn" id="1_8oxyt"]
 [ext_resource type="Material" uid="uid://c786wrb72vpw6" path="res://Materials/Metals/Metal.tres" id="1_jja0o"]
 [ext_resource type="Script" path="res://Actors/Turrets/Default/Turret.cs" id="1_yyfay"]
 [ext_resource type="Material" uid="uid://bb5hwfky6hw6d" path="res://Materials/Metals/Tarnished.tres" id="2_mapg7"]
 [ext_resource type="Material" uid="uid://c1tevbx05cr88" path="res://Materials/Glass.tres" id="5_4iogw"]
-[ext_resource type="PackedScene" uid="uid://baohtgq4giedm" path="res://UI/Menu/PropertyControl/PropertyControl.tscn" id="6_jwdre"]
+[ext_resource type="PackedScene" uid="uid://bjvm5dlwemmoo" path="res://UI/Menu/Tabs/DisplayProperty.tscn" id="6_abnuo"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_tjrqj"]
 size = Vector3(0.5, 0.5, 0.5)
@@ -18,6 +18,37 @@ size = Vector3(0.1, 0.6, 0.6)
 [sub_resource type="SphereMesh" id="SphereMesh_akpm6"]
 radial_segments = 6
 rings = 6
+
+[sub_resource type="BoxMesh" id="BoxMesh_c6crq"]
+size = Vector3(0.2, 0.2, 2)
+
+[sub_resource type="Gradient" id="Gradient_1lxig"]
+offsets = PackedFloat32Array(0.306738, 0.335106)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hku4l"]
+noise_type = 2
+frequency = 0.0208
+fractal_octaves = 1
+cellular_distance_function = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_st6gc"]
+width = 128
+height = 128
+in_3d_space = true
+color_ramp = SubResource("Gradient_1lxig")
+noise = SubResource("FastNoiseLite_hku4l")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nliy3"]
+transparency = 1
+cull_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(1, 1, 0, 0.65098)
+albedo_texture = SubResource("NoiseTexture2D_st6gc")
+emission_enabled = true
+emission = Color(0.952941, 0.792157, 0.0588235, 1)
+emission_energy_multiplier = 5.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_g6vpc"]
 height = 1.0
@@ -33,14 +64,29 @@ size = Vector3(0.1, 0.6, 0.6)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_7tjso"]
 radius = 0.518579
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_20lhj"]
-load_path = "res://.godot/imported/Turret.png-0f921d0abf6da44ee565d7ddcea9bab9.ctex"
+[sub_resource type="PrismMesh" id="PrismMesh_arvlj"]
+left_to_right = 0.1
 
-[node name="Default" type="Node3D" node_paths=PackedStringArray("gun", "glassDisplay") groups=["Turrets"]]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.1, 0)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ni7n"]
+albedo_color = Color(1, 0, 0, 1)
+
+[node name="Default" type="Node3D" node_paths=PackedStringArray("gun", "thirdPersonCam", "topDownCam", "marker1", "aimGhost", "UI", "headRotText", "fireRateText", "aimRotText", "glassText", "rightGainText", "leftGainText") groups=["Turrets"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 script = ExtResource("1_yyfay")
 gun = NodePath("Head/Gun")
-glassDisplay = NodePath("GlassSoul/RichTextLabel")
+gainRate = 0.1
+dampLock = 5.0
+thirdPersonCam = NodePath("Head/ThirdPerson")
+topDownCam = NodePath("TopDown")
+marker1 = NodePath("Marker1")
+aimGhost = NodePath("Head/Marker2Holder")
+UI = NodePath("UI")
+headRotText = NodePath("UI/Container/HeadRotation")
+fireRateText = NodePath("UI/Container/FireRate")
+aimRotText = NodePath("UI/Container/AimRot")
+glassText = NodePath("UI/Container/Glass")
+rightGainText = NodePath("UI/Container/RightGain")
+leftGainText = NodePath("UI/Container/LeftGain")
 
 [node name="Head" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.748976, 0)
@@ -53,7 +99,7 @@ gravity_scale = 0.0
 angular_damp = 3.0
 
 [node name="Battery" type="MeshInstance3D" parent="Head"]
-transform = Transform3D(-0.35575, 0.665512, 0.294338, -0.481622, 0.0302717, -0.650556, -0.54551, -0.460735, 0.382415, 0.209621, 0.269915, 0.263439)
+transform = Transform3D(0.287852, -0.715905, -0.246416, -0.481622, 0.0302717, -0.650556, 0.584192, 0.377708, -0.414916, -0.1792, 0.23102, -0.23723)
 material_override = ExtResource("5_4iogw")
 mesh = SubResource("BoxMesh_tjrqj")
 skeleton = NodePath("../../Body")
@@ -64,7 +110,7 @@ material_override = ExtResource("2_mapg7")
 mesh = SubResource("BoxMesh_7thmm")
 
 [node name="Gun" parent="Head" instance=ExtResource("1_8oxyt")]
-transform = Transform3D(3.0598e-08, -0.7, -6.11959e-08, -0.7, -3.0598e-08, 0, -2.67496e-15, 6.11959e-08, -0.7, 0, 0.186, 0.01)
+transform = Transform3D(3.0598e-08, -0.7, -6.11959e-08, -0.7, -3.0598e-08, 0, -2.67496e-15, 6.11959e-08, -0.7, 0, 0.186, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Head"]
 shape = SubResource("SphereShape3D_28tdv")
@@ -73,10 +119,16 @@ shape = SubResource("SphereShape3D_28tdv")
 material_override = ExtResource("2_mapg7")
 mesh = SubResource("SphereMesh_akpm6")
 
-[node name="Camera3D" type="Camera3D" parent="Head"]
+[node name="ThirdPerson" type="Camera3D" parent="Head"]
 transform = Transform3D(2, 0, 0, 0, 1.98562, 0.239407, 0, -0.239407, 1.98562, 0, 2.52876, 6.84919)
-visible = false
-current = true
+
+[node name="Marker2Holder" type="Node3D" parent="Head"]
+
+[node name="Marker2" type="MeshInstance3D" parent="Head/Marker2Holder"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.0150731, -1.5)
+mesh = SubResource("BoxMesh_c6crq")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_nliy3")
 
 [node name="Body" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
@@ -103,21 +155,6 @@ transform = Transform3D(0.998855, 0.047771, 0.00276424, -0.0478504, 0.997445, 0.
 material_override = ExtResource("2_mapg7")
 mesh = SubResource("BoxMesh_lw8mc")
 
-[node name="ColorRect" parent="Body" instance=ExtResource("6_jwdre")]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_bottom = 0.0
-offset_left = -385.0
-offset_top = 4.0
-offset_right = 381.0
-offset_bottom = 1157.0
-grow_horizontal = 0
-grow_vertical = 1
-scale = Vector2(0.5, 0.17)
-ratio = 0.6985
-alignment_horizontal = 2
-alignment_vertical = 0
-
 [node name="Hitbox" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
@@ -127,22 +164,136 @@ shape = SubResource("CylinderShape3D_7tjso")
 [node name="Timer" type="Timer" parent="."]
 autostart = true
 
-[node name="GlassSoul" type="HBoxContainer" parent="."]
-anchors_preset = -1
-anchor_right = 0.112847
-anchor_bottom = 0.0987654
+[node name="Marker1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.78451, 0, -0.945361)
+visible = false
+mesh = SubResource("PrismMesh_arvlj")
+surface_material_override/0 = SubResource("StandardMaterial3D_4ni7n")
 
-[node name="TextureRect" type="TextureRect" parent="GlassSoul"]
-modulate = Color(1, 1, 0, 1)
-layout_mode = 2
-size_flags_horizontal = 3
-texture = SubResource("CompressedTexture2D_20lhj")
+[node name="TopDown" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 20, 0)
 
-[node name="RichTextLabel" type="RichTextLabel" parent="GlassSoul"]
-layout_mode = 2
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
-text = "1"
-metadata/_edit_use_anchors_ = true
+
+[node name="Upgrades" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -197.0
+offset_top = 33.0
+offset_right = -44.0
+offset_bottom = 119.0
+grow_horizontal = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/Upgrades"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/Upgrades/PanelContainer"]
+layout_mode = 2
+color = Color(1, 0.678431, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Upgrades/PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/Upgrades/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="UI/Upgrades/PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Property Name:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Upgrades/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Cost" type="Label" parent="UI/Upgrades/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cost: "
+
+[node name="Cost2" type="Label" parent="UI/Upgrades/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "$$$"
+
+[node name="Gain" type="Label" parent="UI/Upgrades/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Gain:"
+
+[node name="Gain2" type="Label" parent="UI/Upgrades/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "$$$"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="UI/Upgrades/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="UI/Upgrades/PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Sell:"
+
+[node name="Label2" type="Label" parent="UI/Upgrades/PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Buy:"
+
+[node name="Container" type="VBoxContainer" parent="UI"]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 0
+offset_left = 58.0
+offset_top = 60.0
+offset_right = 458.0
+offset_bottom = 260.0
+scale = Vector2(2, 2)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AimRot" parent="UI/Container" instance=ExtResource("6_abnuo")]
+layout_mode = 2
+name = "Aim Rotation.Y: "
+
+[node name="HeadRotation" parent="UI/Container" instance=ExtResource("6_abnuo")]
+layout_mode = 2
+name = "Head Rotation.Y: "
+
+[node name="FireRate" parent="UI/Container" instance=ExtResource("6_abnuo")]
+layout_mode = 2
+name = "Fire Rate: "
+
+[node name="Glass" parent="UI/Container" instance=ExtResource("6_abnuo")]
+layout_mode = 2
+name = "Glass: "
+text = "Glass PlAcEhOlDeR"
+
+[node name="RightGain" parent="UI/Container" instance=ExtResource("6_abnuo")]
+layout_mode = 2
+name = "Right Gain: "
+
+[node name="LeftGain" parent="UI/Container" instance=ExtResource("6_abnuo")]
+layout_mode = 2
+name = "Left Gain: "
+
+[node name="TurretSwitch" type="Button" parent="UI"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -161.0
+offset_top = -43.5
+offset_bottom = 43.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "Next Turret"
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="UI/TurretSwitch" to="." method="_on_turret_switch_pressed"]

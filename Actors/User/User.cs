@@ -3,6 +3,13 @@ using System;
 
 public partial class User : Node3D
 {
+	// Exported public variables
+
+	// public variables
+	public Unit selected;
+	
+	// Private variables
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{

@@ -23,6 +23,10 @@ window/size/resizable=false
 
 project/assembly_name="Turret"
 
+[filesystem]
+
+import/fbx/enabled=false
+
 [input]
 
 Left={

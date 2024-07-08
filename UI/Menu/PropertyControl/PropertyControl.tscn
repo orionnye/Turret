@@ -1,9 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://baohtgq4giedm"]
+[gd_scene load_steps=2 format=3 uid="uid://dy4nbsxvicg7w"]
 
 [ext_resource type="Texture2D" uid="uid://wfom02gtl1c6" path="res://UI/Icons/Turret.png" id="1_tp7lo"]
-[ext_resource type="Script" path="res://UI/Menu/PropertyControl/PropertyControl.cs" id="1_yaowo"]
 
-[node name="ColorRect" type="AspectRatioContainer" node_paths=PackedStringArray("valueDisplay")]
+[node name="ColorRect" type="AspectRatioContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -12,8 +11,6 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 ratio = 2.0
-script = ExtResource("1_yaowo")
-valueDisplay = NodePath("PropertyControl/VBoxContainer/RichTextLabel")
 
 [node name="PropertyControl" type="HBoxContainer" parent="."]
 layout_mode = 2

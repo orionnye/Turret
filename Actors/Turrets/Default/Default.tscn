@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Actors/Turrets/Default/Turret.cs" id="1_yyfay"]
 [ext_resource type="Material" uid="uid://bb5hwfky6hw6d" path="res://Materials/Metals/Tarnished.tres" id="2_mapg7"]
 [ext_resource type="Material" uid="uid://c1tevbx05cr88" path="res://Materials/Glass.tres" id="5_4iogw"]
-[ext_resource type="PackedScene" uid="uid://bjvm5dlwemmoo" path="res://UI/Menu/Tabs/DisplayProperty.tscn" id="6_abnuo"]
+[ext_resource type="PackedScene" uid="uid://cdlwvk1f2rbu3" path="res://UI/TurretHandler/TurretHandler.tscn" id="6_7u338"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_tjrqj"]
 size = Vector3(0.5, 0.5, 0.5)
@@ -70,7 +70,7 @@ left_to_right = 0.1
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ni7n"]
 albedo_color = Color(1, 0, 0, 1)
 
-[node name="Default" type="Node3D" node_paths=PackedStringArray("gun", "thirdPersonCam", "topDownCam", "marker1", "aimGhost", "UI", "headRotText", "fireRateText", "aimRotText", "glassText", "rightGainText", "leftGainText") groups=["Turrets"]]
+[node name="Default" type="Node3D" node_paths=PackedStringArray("gun", "thirdPersonCam", "topDownCam", "marker1", "aimGhost", "UI") groups=["Turrets"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 script = ExtResource("1_yyfay")
 gun = NodePath("Head/Gun")
@@ -81,12 +81,6 @@ topDownCam = NodePath("TopDown")
 marker1 = NodePath("Marker1")
 aimGhost = NodePath("Head/Marker2Holder")
 UI = NodePath("UI")
-headRotText = NodePath("UI/Container/HeadRotation")
-fireRateText = NodePath("UI/Container/FireRate")
-aimRotText = NodePath("UI/Container/AimRot")
-glassText = NodePath("UI/Container/Glass")
-rightGainText = NodePath("UI/Container/RightGain")
-leftGainText = NodePath("UI/Container/LeftGain")
 
 [node name="Head" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.748976, 0)
@@ -173,127 +167,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_4ni7n")
 [node name="TopDown" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 20, 0)
 
-[node name="UI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-
-[node name="Upgrades" type="VBoxContainer" parent="UI"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -197.0
-offset_top = 33.0
-offset_right = -44.0
-offset_bottom = 119.0
-grow_horizontal = 0
-
-[node name="PanelContainer" type="PanelContainer" parent="UI/Upgrades"]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="UI/Upgrades/PanelContainer"]
-layout_mode = 2
-color = Color(1, 0.678431, 0, 1)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Upgrades/PanelContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="UI/Upgrades/PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Label" type="Label" parent="UI/Upgrades/PanelContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Property Name:"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/Upgrades/PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Cost" type="Label" parent="UI/Upgrades/PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Cost: "
-
-[node name="Cost2" type="Label" parent="UI/Upgrades/PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "$$$"
-
-[node name="Gain" type="Label" parent="UI/Upgrades/PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Gain:"
-
-[node name="Gain2" type="Label" parent="UI/Upgrades/PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "$$$"
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="UI/Upgrades/PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Label" type="Label" parent="UI/Upgrades/PanelContainer/VBoxContainer/HBoxContainer3"]
-layout_mode = 2
-text = "Sell:"
-
-[node name="Label2" type="Label" parent="UI/Upgrades/PanelContainer/VBoxContainer/HBoxContainer3"]
-layout_mode = 2
-text = "Buy:"
-
-[node name="Container" type="VBoxContainer" parent="UI"]
-custom_minimum_size = Vector2(400, 200)
-layout_mode = 0
-offset_left = 58.0
-offset_top = 60.0
-offset_right = 458.0
-offset_bottom = 260.0
-scale = Vector2(2, 2)
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="AimRot" parent="UI/Container" instance=ExtResource("6_abnuo")]
-layout_mode = 2
-name = "Aim Rotation.Y: "
-
-[node name="HeadRotation" parent="UI/Container" instance=ExtResource("6_abnuo")]
-layout_mode = 2
-name = "Head Rotation.Y: "
-
-[node name="FireRate" parent="UI/Container" instance=ExtResource("6_abnuo")]
-layout_mode = 2
-name = "Fire Rate: "
-
-[node name="Glass" parent="UI/Container" instance=ExtResource("6_abnuo")]
-layout_mode = 2
-name = "Glass: "
-text = "Glass PlAcEhOlDeR"
-
-[node name="RightGain" parent="UI/Container" instance=ExtResource("6_abnuo")]
-layout_mode = 2
-name = "Right Gain: "
-
-[node name="LeftGain" parent="UI/Container" instance=ExtResource("6_abnuo")]
-layout_mode = 2
-name = "Left Gain: "
-
-[node name="TurretSwitch" type="Button" parent="UI"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -161.0
-offset_top = -43.5
-offset_bottom = 43.5
-grow_horizontal = 0
-grow_vertical = 2
-text = "Next Turret"
+[node name="UI" parent="." instance=ExtResource("6_7u338")]
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="pressed" from="UI/TurretSwitch" to="." method="_on_turret_switch_pressed"]

@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cacg43h7ragbr"]
+[gd_scene load_steps=7 format=3 uid="uid://cacg43h7ragbr"]
 
 [ext_resource type="Script" path="res://Events/Battle/Battle.cs" id="1_jop60"]
 [ext_resource type="PackedScene" uid="uid://c4v1b1a1c4vnb" path="res://Terrain/Primaries/Plane.tscn" id="2_caf34"]
 [ext_resource type="PackedScene" uid="uid://b8ylv0l52enw8" path="res://Terrain/Primaries/Cube.tscn" id="3_faf8u"]
 [ext_resource type="PackedScene" uid="uid://nmy53kek0he1" path="res://Actors/Spawner/Spawner.tscn" id="4_1yinf"]
 [ext_resource type="PackedScene" uid="uid://hgqtjij5ji1a" path="res://Actors/Turrets/Default/Default.tscn" id="5_861xi"]
+[ext_resource type="PackedScene" uid="uid://dgjbta8ob5475" path="res://Actors/Turrets/KonnorModel/turret.tscn" id="6_3qsh0"]
 
 [node name="Battle" type="Node3D"]
 script = ExtResource("1_jop60")
@@ -96,19 +97,22 @@ transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 35, 2, -10)
 [node name="Actors" type="Node3D" parent="."]
 
 [node name="Spawner" parent="Actors" node_paths=PackedStringArray("Actors") instance=ExtResource("4_1yinf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.1422, 1.12448, -2.09768)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.2022, 1.12448, -2.09768)
 Actors = NodePath("..")
 
 [node name="User" type="Node3D" parent="."]
 
 [node name="Default" parent="User" instance=ExtResource("5_861xi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8406, 0.1, -7.88256)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.92347, 0.1, -12.399)
 dampPassive = 50.0
 
 [node name="Default2" parent="User" instance=ExtResource("5_861xi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.73019, 0.1, 4.05371)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.71445, 0.1, 10.0573)
 dampPassive = 50.0
 
 [node name="Default3" parent="User" instance=ExtResource("5_861xi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.408, 0.1, 0)
 dampPassive = 50.0
+
+[node name="Turret" parent="." instance=ExtResource("6_3qsh0")]
+transform = Transform3D(0.27385, -0.0184579, -0.217176, 0.0864519, 0.329335, 0.0810222, 0.20008, -0.117038, 0.262241, -18.7956, -1.4141, 0.256514)

@@ -1,0 +1,116 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdlwvk1f2rbu3"]
+
+[ext_resource type="PackedScene" uid="uid://bjvm5dlwemmoo" path="res://UI/Menu/Tabs/DisplayProperty.tscn" id="1_dkseo"]
+[ext_resource type="Script" path="res://UI/TurretHandler/TurretHandler.cs" id="1_pbkyg"]
+
+[node name="UI" type="Control" node_paths=PackedStringArray("glass", "fireRate", "gainRate", "rightGain", "leftGain", "headRot", "aimRot")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+script = ExtResource("1_pbkyg")
+glass = NodePath("Stats/Glass")
+fireRate = NodePath("Stats/FireRate")
+gainRate = NodePath("Stats/GainRate")
+rightGain = NodePath("Stats/RightGain")
+leftGain = NodePath("Stats/LeftGain")
+headRot = NodePath("Stats/HeadRotation")
+aimRot = NodePath("Stats/AimRot")
+
+[node name="Upgrades" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -197.0
+offset_top = 33.0
+offset_right = -44.0
+offset_bottom = 119.0
+grow_horizontal = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="Upgrades"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Upgrades/PanelContainer"]
+layout_mode = 2
+color = Color(1, 0.678431, 0, 1)
+
+[node name="InvestContainer" type="VBoxContainer" parent="Upgrades/PanelContainer"]
+layout_mode = 2
+
+[node name="GainRate" type="HBoxContainer" parent="Upgrades/PanelContainer/InvestContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="Upgrades/PanelContainer/InvestContainer/GainRate"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Gain Rate:"
+
+[node name="Value" type="Label" parent="Upgrades/PanelContainer/InvestContainer/GainRate"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="IncrementTurnSpeed" type="Button" parent="Upgrades/PanelContainer/InvestContainer/GainRate"]
+layout_mode = 2
+text = " + "
+
+[node name="Stats" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 0
+offset_left = 58.0
+offset_top = 60.0
+offset_right = 458.0
+offset_bottom = 260.0
+scale = Vector2(2, 2)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Glass" parent="Stats" instance=ExtResource("1_dkseo")]
+layout_mode = 2
+name = "Glass: "
+text = "Glass PlAcEhOlDeR"
+
+[node name="FireRate" parent="Stats" instance=ExtResource("1_dkseo")]
+layout_mode = 2
+name = "Fire Rate: "
+
+[node name="GainRate" parent="Stats" instance=ExtResource("1_dkseo")]
+layout_mode = 2
+name = "Gain Rate: "
+
+[node name="RightGain" parent="Stats" instance=ExtResource("1_dkseo")]
+layout_mode = 2
+name = "Right Gain: "
+
+[node name="LeftGain" parent="Stats" instance=ExtResource("1_dkseo")]
+layout_mode = 2
+name = "Left Gain: "
+
+[node name="HeadRotation" parent="Stats" instance=ExtResource("1_dkseo")]
+layout_mode = 2
+name = "Head Rotation.Y: "
+
+[node name="AimRot" parent="Stats" instance=ExtResource("1_dkseo")]
+layout_mode = 2
+name = "Aim Rotation.Y: "
+
+[node name="TurretSwitch" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -161.0
+offset_top = -43.5
+offset_bottom = 43.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "Next Turret"
+
+[connection signal="pressed" from="Upgrades/PanelContainer/InvestContainer/GainRate/IncrementTurnSpeed" to="." method="_on_increment_turn_speed_pressed"]
+[connection signal="pressed" from="TurretSwitch" to="." method="_on_turret_switch_pressed"]

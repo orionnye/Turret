@@ -35,13 +35,7 @@ public partial class Turret : Node3D {
 	[Export] public Node3D aimGhost;
 
 	// UI Elements
-	[Export] public Control UI;
-	[Export] public DisplayProperty headRotText;
-	[Export] public DisplayProperty fireRateText;
-	[Export] public DisplayProperty aimRotText;
-	[Export] public DisplayProperty glassText;
-	[Export] public DisplayProperty rightGainText;
-	[Export] public DisplayProperty leftGainText;
+	[Export] public TurretHandler UI;
 
 
 	public bool IsActive() {
@@ -50,33 +44,42 @@ public partial class Turret : Node3D {
 		return thirdPersonCam.Current || topDownCam.Current;
 	}
 
-	public void SetfireRate(float value) {
-		float min = 0.1f;
-		float max = 5f;
-		if (value < max && value > min) {
-			fireRate = value;
-			timer.WaitTime = value;
-			fireRateText.SetText(fireRate.ToString());
-		}
-	}
-	public void SetGlass(int value) {
-		glass = value;
-		glassText.SetText(glass.ToString());
-	}
-	public void SetCamera( Camera3D cam) {
-		primaryCam = cam;
-		cam.Current = true;
-	}
+	// public void SetfireRate(float value) {
+	// 	float min = 0.1f;
+	// 	float max = 5f;
+	// 	if (value < max && value > min) {
+	// 		fireRate = value;
+	// 		timer.WaitTime = value;
+	// 		UI.fireRate.SetText(fireRate.ToString());
+	// 	}
+	// }
+	// public void SetGlass(int value) {
+	// 	glass = value;
+	// 	UI.glass.SetText(glass.ToString());
+	// }
+	// public void SetCamera( Camera3D cam) {
+	// 	primaryCam = cam;
+	// 	cam.Current = true;
+	// }
 
 
 	// -------------------- Called when the node enters the scene tree for the first time --------------------------
 	public override void _Ready() {
 		head = (RigidBody3D)GetNode<RigidBody3D>("Head");
 		timer = (Timer)GetNode<Timer>("Timer");
-		SetfireRate(fireRate);
-		SetGlass(10);
+		// SetfireRate(fireRate);
+		// SetGlass(10);
 		// SetCamera(topDownCam);
-		SetCamera(thirdPersonCam);
+		// SetCamera(thirdPersonCam);
+
+		// On Boot, set all values to false except for first index
+		UI.Visible = false;
+		// On first, make active
+		Godot.Collections.Array<Godot.Node> turrets = GetTree().GetNodesInGroup("Turrets");
+		int selfIndex = turrets.IndexOf(this);
+		if (selfIndex == 0) {
+			MakeCurrent();
+		}
 	}
 
 
@@ -167,8 +170,8 @@ public partial class Turret : Node3D {
 			}
 		}
 		
-		headRotText.SetText(headRot.ToString());
-		aimRotText.SetText(targetAngle.ToString());
+		// UI.headRot.SetText(headRot.ToString());
+		// UI.aimRot.SetText(targetAngle.ToString());
 
 		// Rotate Turret Right
 		if (!turnLeft) {
@@ -214,60 +217,38 @@ public partial class Turret : Node3D {
 			rightGain = maxGain;
 		}
 	}
-	public void unitToggle() {
-		// Break into two functions, findNextUnit and focusOnUnit
-		// change active turret here
-		// Find a list of turrets in scene
-		Godot.Collections.Array<Godot.Node> turrets = GetTree().GetNodesInGroup("Turrets");
-		// Do I need an index to get the "next" item in the array?
-		int selfIndex = turrets.IndexOf(this);
-
-		int nextIndex = selfIndex + 1;
-
-		// If total turrets are 1, then there's no need to toggle
-		if (turrets.Count < 1) {
-			return;
-		}
-		if (nextIndex >= turrets.Count) {
-			nextIndex = 0;
-		}
-
-		// access the nextTurret
-		Turret nextTurret = (Turret)turrets[nextIndex];
+	public void MakeCurrent() {
 		// topDownCam.Current = false;
-		UI.Visible = false;
-		nextTurret.UI.Visible = true;
-		nextTurret.topDownCam.MakeCurrent();
-		// GD.Print("selfIndex: ", selfIndex);
+		UI.Visible = true;
+		// topDownCam.MakeCurrent();
+		thirdPersonCam.MakeCurrent();
+	}
+	public void MakeInactive() {
+		
 	}
 	// Big Spin move check for moving at max speed and spawn Chainsaw
 	public Vector3 GetSpin() {
 		return new Vector3(0, 0, 0);
 	}
 
-
 	// -------------------------------------- Called every frame. 'delta' is the elapsed time since the previous frame -------------------------------------
 	public override void _Process(double delta) {
 		Unit target = GetClosestUnit();
 		if (target != null) {
 			trackUnit(target);
+		} else {
+			UserInput();
 		}
-		// if (Input.IsActionJustPressed("Cycle")) {
-		// 	// Toggle Active Camera maybe?
-		// 	GD.Print(topDownCam.Current, thirdPersonCam.Current);
-		// }
-		// trackMouse();
-
-		// UserInput();
 
 		// Actual Turret Default Controls
 		Vector3 torque = new Vector3(0, leftGain - rightGain, 0);
-		rightGainText.SetText(rightGain.ToString());
-		leftGainText.SetText(leftGain.ToString());
+		// UI.rightGain.SetText(rightGain.ToString());
+		// UI.leftGain.SetText(leftGain.ToString());
 		head.AngularDamp = dampPassive;
 		if (torque.Length() > 0) {
 			head.ApplyTorque(torque);
 		}
+		UI.UpdateText();
 	}
 
 
@@ -279,7 +260,7 @@ public partial class Turret : Node3D {
 			// Die();
 		}
 		if (body.GetType() == typeof(Glass)) {
-			SetGlass(glass+1);
+			// UI.SetGlass(glass+1);
 			body.QueueFree();
 		}
 	}
@@ -290,12 +271,6 @@ public partial class Turret : Node3D {
 		}
 		// GD.Print("Fire Bullet!!!");
 	}
-	private void _on_turret_switch_pressed()
-	{
-		GD.Print("active?: ", IsActive());
-		GD.Print("activeCams: ", topDownCam.Current, thirdPersonCam.Current);
-		if (IsActive()) {
-			unitToggle();
-		}
-	}
 }
+
+

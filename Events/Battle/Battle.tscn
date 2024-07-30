@@ -99,20 +99,18 @@ transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 35, 2, -10)
 [node name="Spawner" parent="Actors" node_paths=PackedStringArray("Actors") instance=ExtResource("4_1yinf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.2022, 1.12448, -2.09768)
 Actors = NodePath("..")
+spawnTimer = 0.5
 
 [node name="User" type="Node3D" parent="."]
 
 [node name="Default" parent="User" instance=ExtResource("5_861xi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.92347, 0.1, -12.399)
-dampPassive = 50.0
 
 [node name="Default2" parent="User" instance=ExtResource("5_861xi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.71445, 0.1, 10.0573)
-dampPassive = 50.0
 
 [node name="Default3" parent="User" instance=ExtResource("5_861xi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.408, 0.1, 0)
-dampPassive = 50.0
 
-[node name="Turret" parent="." instance=ExtResource("6_3qsh0")]
+[node name="TurretModel" parent="." instance=ExtResource("6_3qsh0")]
 transform = Transform3D(0.27385, -0.0184579, -0.217176, 0.0864519, 0.329335, 0.0810222, 0.20008, -0.117038, 0.262241, -18.7956, -1.4141, 0.256514)

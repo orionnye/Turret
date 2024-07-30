@@ -1,0 +1,98 @@
+[gd_scene load_steps=7 format=3 uid="uid://2xbypkwntq4k"]
+
+[ext_resource type="Script" path="res://Items/Active/GlassBank/GlassBank.cs" id="1_0jlvx"]
+[ext_resource type="Material" uid="uid://crcotoh32sv1g" path="res://Materials/Matte/Gray_Matte.tres" id="1_lyxnb"]
+[ext_resource type="Material" uid="uid://c1tevbx05cr88" path="res://Materials/Glass.tres" id="1_uut8a"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kuxvr"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_lr5vy"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_n7t2t"]
+size = Vector3(0.1, 1.2, 0.1)
+
+[node name="GlassBank" type="RigidBody3D"]
+script = ExtResource("1_0jlvx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_kuxvr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_lr5vy")
+surface_material_override/0 = ExtResource("1_uut8a")
+
+[node name="Casing" type="Node3D" parent="."]
+
+[node name="Brace" type="MeshInstance3D" parent="Casing"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5)
+mesh = SubResource("BoxMesh_n7t2t")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_lyxnb")
+
+[node name="Brace2" type="MeshInstance3D" parent="Casing"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0.5)
+mesh = SubResource("BoxMesh_n7t2t")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_lyxnb")
+
+[node name="Brace3" type="MeshInstance3D" parent="Casing"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
+mesh = SubResource("BoxMesh_n7t2t")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_lyxnb")
+
+[node name="Brace4" type="MeshInstance3D" parent="Casing"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -0.5)
+mesh = SubResource("BoxMesh_n7t2t")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_lyxnb")
+
+[node name="Brace5" type="MeshInstance3D" parent="Casing"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0.499932, -0.5)
+mesh = SubResource("BoxMesh_n7t2t")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_lyxnb")
+
+[node name="Brace6" type="MeshInstance3D" parent="Casing"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0.499932, 0.5)
+mesh = SubResource("BoxMesh_n7t2t")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_lyxnb")
+
+[node name="Brace7" type="MeshInstance3D" parent="Casing"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, -0.499932, 0.5)
+mesh = SubResource("BoxMesh_n7t2t")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_lyxnb")
+
+[node name="Brace8" type="MeshInstance3D" parent="Casing"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, -0.499932, -0.5)
+mesh = SubResource("BoxMesh_n7t2t")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_lyxnb")
+
+[node name="Brace9" type="MeshInstance3D" parent="Casing"]
+transform = Transform3D(1.79966e-15, -4.37114e-08, -1, -1, -4.37114e-08, 1.11022e-16, -4.37114e-08, 1, -4.37114e-08, 0.499812, 0.499932, 0.0137253)
+mesh = SubResource("BoxMesh_n7t2t")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_lyxnb")
+
+[node name="Brace10" type="MeshInstance3D" parent="Casing"]
+transform = Transform3D(1.79966e-15, -4.37114e-08, -1, -1, -4.37114e-08, 1.11022e-16, -4.37114e-08, 1, -4.37114e-08, -0.499812, 0.499932, -0.0137253)
+mesh = SubResource("BoxMesh_n7t2t")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_lyxnb")
+
+[node name="Brace11" type="MeshInstance3D" parent="Casing"]
+transform = Transform3D(1.79966e-15, -4.37114e-08, -1, -1, -4.37114e-08, 1.11022e-16, -4.37114e-08, 1, -4.37114e-08, -0.499812, -0.499932, -0.0137253)
+mesh = SubResource("BoxMesh_n7t2t")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_lyxnb")
+
+[node name="Brace12" type="MeshInstance3D" parent="Casing"]
+transform = Transform3D(1.79966e-15, -4.37114e-08, -1, -1, -4.37114e-08, 1.11022e-16, -4.37114e-08, 1, -4.37114e-08, 0.499812, -0.499932, 0.0137253)
+mesh = SubResource("BoxMesh_n7t2t")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_lyxnb")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]

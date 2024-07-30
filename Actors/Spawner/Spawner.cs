@@ -49,6 +49,7 @@ public partial class Spawner : Node3D
 		float yeetStr = 5;
 		// Spawn Unit
 		Unit unit = (Unit)spawn.Instantiate();
+		unit.host = this;
 		unit.Position = GlobalPosition;
 		RandomNumberGenerator rng = new RandomNumberGenerator();
 		Vector3 randomVector = new Vector3(rng.RandfRange(-implStr, implStr), rng.Randf()*yeetStr, rng.RandfRange(-implStr, implStr));

@@ -5,19 +5,33 @@ public partial class TurretHandler : Control
 {
 	// Balance: stored here and resolved to positive before mutations occur
 
-	// HUD Displays
+	// HUD Production
+	[Export] public PackedScene iStat;
+
 	// Income Attribute
 	[Export] public DisplayProperty glass;
+
 	// Offensive Attribute
 	[Export] public DisplayProperty fireRate;
+	
+	// Limiting Attributes
+	[Export] public DisplayProperty maxGain;
+	[Export] public DisplayProperty dampLock;
+	[Export] public DisplayProperty dampPassive;
+	[Export] public DisplayProperty aimMargin;
+	
+
 	// Reactive Attribute
 	[Export] public DisplayProperty gainRate;
+
 	// Reactive Sub-Values
 	[Export] public DisplayProperty rightGain;
 	[Export] public DisplayProperty leftGain;
 	[Export] public DisplayProperty headRot;
 	[Export] public DisplayProperty aimRot;
 	
+	// SpedingTree
+	[Export] public VBoxContainer upgrades;
 
 	public void unitToggle(Turret current) {
 		// change active turret here
@@ -66,11 +80,43 @@ public partial class TurretHandler : Control
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta) {
+		UpdateShop();
+	}
+
+	public void UpdateShop() {
+		Turret host = (Turret)GetParent();
+		// GD.Print("Upgrade: ", upgrades);
+		foreach (incrementStat upgrade in upgrades.GetChildren()) {
+			// GD.Print("report on queued status: ", upgrade.queued);
+			if (upgrade.queued && host.glass >= upgrade.cost) {
+				host.stats = host.stats.Add(upgrade.stats);
+				// update stats on recieving addition
+				upgrades.RemoveChild(upgrade);
+				upgrade.QueueFree();
+				host.glass -= upgrade.cost;
+				AddPurchase();
+			}
+		}
+	}
+	public void AddPurchase() {
+		// Adds a purchase to the stat Shop
+		Turret host = (Turret)GetParent();
+
+		// instance a child and add it as a child the shop
+		incrementStat clone = (incrementStat)iStat.Instantiate();
+		upgrades.AddChild(clone);
 	}
 
 	public void UpdateText() {
 		// Update all text Fields based off the corresponding Turret values
 		Turret host = (Turret)GetParent();
+		glass.SetText(host.glass.ToString());
+		fireRate.SetText(host.stats.fireRate.ToString());
+		maxGain.SetText(host.stats.maxGain.ToString());
+		gainRate.SetText(host.stats.gainRate.ToString());
+		dampLock.SetText(host.stats.dampLock.ToString());
+		dampPassive.SetText(host.stats.dampPassive.ToString());
+		aimMargin.SetText(host.stats.aimMargin.ToString());
 		rightGain.SetText(host.rightGain.ToString());
 		leftGain.SetText(host.leftGain.ToString());
 	}
@@ -81,10 +127,11 @@ public partial class TurretHandler : Control
 	}
 	private void _on_increment_turn_speed_pressed() {
 		Turret host = (Turret)GetParent();
-
+		int cost = 1;
+		float increment = 0.1f;
+		if (host.glass >= cost) {
+			host.glass -= cost;
+			host.stats.gainRate += increment;
+		}
 	}
 }
-
-
-
-

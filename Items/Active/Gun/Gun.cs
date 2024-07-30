@@ -10,7 +10,6 @@ public partial class Gun : Node3D
 	[Export] public PackedScene bulletScene;
 	[Export] public AnimationPlayer anim;
 
-
 	public virtual void Activate() {
 		// Fires a bullet from turret
 		// spawn a bullet and add a velocity to the bullet facing gun direction

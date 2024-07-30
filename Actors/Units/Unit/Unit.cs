@@ -6,6 +6,7 @@ using System.Threading;
 public partial class Unit : RigidBody3D {
 	// Persistance Stats
 	[Export] public int health = 1;
+	[Export] public int glass = -1;
 	[Export] public float maxHealth = 2;
 	[Export] public int cost = 2;
 	
@@ -13,8 +14,10 @@ public partial class Unit : RigidBody3D {
 	[Export] public float speed = 0.01f;
 	[Export] public float contentment = 0.5f;
 	[Export] public float curiosity = 4f;
+	[Export] public float attentionSpan = 3f;
 	public Vector3 targetPos = new Vector3(0, 0, 0);
 	public Node3D target;
+	public Node3D host;
 
 	// Items
 	[Export] public PackedScene item;
@@ -23,24 +26,46 @@ public partial class Unit : RigidBody3D {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
 		// getRandomPos();
+		// Assign timout period
+		Godot.Timer timer = (Godot.Timer)GetNode("Timer");
+		timer.WaitTime = attentionSpan;
+
 		target = getTarget();
 	}
-
-	public Turret getTarget() {
-		Godot.Collections.Array<Godot.Node> turrets = GetTree().GetNodesInGroup("Turrets");
-		Turret closest = (Turret)turrets.First();
-		foreach (Turret turret in turrets) {
+	public Glass findGlass() {
+		// Get nodes in group
+		Godot.Collections.Array<Godot.Node> glaus = GetTree().GetNodesInGroup("Glass");
+		
+		// Should randomize search requirements based on unit stats
+		Glass closest = (Glass)glaus.First();
+		foreach (Glass glass in glaus) {
 			float closestDist = (closest.Position - Position).Length();
-			float currentDist = (turret.Position - Position).Length();
+			float currentDist = (glass.Position - Position).Length();
 			if (currentDist < closestDist) {
-				closest = turret;
+				closest = glass;
 			}
 		}
 		return closest;
 	}
+	public Node3D getTarget() {
+		if (cost+glass > cost) {
+			return (Node3D)host;
+		} else {
+			Godot.Collections.Array<Godot.Node> turrets = GetTree().GetNodesInGroup("Turrets");
+			Turret closest = (Turret)turrets.First();
+			foreach (Turret turret in turrets) {
+				float closestDist = (closest.Position - Position).Length();
+				float currentDist = (turret.Position - Position).Length();
+				if (currentDist < closestDist) {
+					closest = turret;
+				}
+			}
+			return (Node3D)closest;
+		}
+	}
+
 	// Unit has movement that can be called here, but no physics is occuring, these are wandering Area 3Ds
 	// This file needs movement control and Actions on interact with specific objects
-
 	private Vector3 GetMotion() {
 		Vector3 motion = new Vector3(0, 0, 0);
 		// Motion should take into account rotation, for now we'll leave that to inertia
@@ -66,7 +91,7 @@ public partial class Unit : RigidBody3D {
 	}
 	// Triggered Death
 	public void Die() {
-		for (int i = 0; i < cost; i++) {
+		for (int i = 0; i < cost + glass; i++) {
 			Glass glass = (Glass)item.Instantiate();
 			glass.grabbed = false;
 			glass.Freeze = false;
@@ -107,6 +132,8 @@ public partial class Unit : RigidBody3D {
 
 	private void _on_timer_timeout() {
 		// Replace with function body.
+		// Set the timeout period to the attentionSpan function
+		target = getTarget();
 		// getRandomPos();
 	}
 	private void _on_area_3d_body_entered(Node3D body) {
@@ -118,6 +145,11 @@ public partial class Unit : RigidBody3D {
 				Die();
 			}
 		}
+		// if (body.GetType() == typeof(Glass)) {
+			// Check for debt, then resolve it by absorbing glass nearby
+			// glass += 1;
+			// body.QueueFree();
+		// }
 	}
 }
 

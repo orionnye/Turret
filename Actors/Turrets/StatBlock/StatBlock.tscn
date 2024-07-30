@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdoiuodfwrn0s"]
+
+[ext_resource type="Script" path="res://Actors/Turrets/StatBlock/StatBlock.cs" id="1_ysjy8"]
+
+[node name="StatBlock" type="Node"]
+script = ExtResource("1_ysjy8")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://hgqtjij5ji1a"]
+[gd_scene load_steps=24 format=3 uid="uid://hgqtjij5ji1a"]
 
 [ext_resource type="PackedScene" uid="uid://d3usnlgmakppf" path="res://Items/Active/Gun/Gun.tscn" id="1_8oxyt"]
 [ext_resource type="Material" uid="uid://c786wrb72vpw6" path="res://Materials/Metals/Metal.tres" id="1_jja0o"]
@@ -6,6 +6,7 @@
 [ext_resource type="Material" uid="uid://bb5hwfky6hw6d" path="res://Materials/Metals/Tarnished.tres" id="2_mapg7"]
 [ext_resource type="Material" uid="uid://c1tevbx05cr88" path="res://Materials/Glass.tres" id="5_4iogw"]
 [ext_resource type="PackedScene" uid="uid://cdlwvk1f2rbu3" path="res://UI/TurretHandler/TurretHandler.tscn" id="6_7u338"]
+[ext_resource type="PackedScene" uid="uid://cdoiuodfwrn0s" path="res://Actors/Turrets/StatBlock/StatBlock.tscn" id="7_4qjuj"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_tjrqj"]
 size = Vector3(0.5, 0.5, 0.5)
@@ -61,8 +62,12 @@ size = Vector3(0.5, 0.5, 0.5)
 [sub_resource type="BoxMesh" id="BoxMesh_lw8mc"]
 size = Vector3(0.1, 0.6, 0.6)
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_c4ysj"]
+height = 1.11994
+radius = 0.632227
+
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_7tjso"]
-radius = 0.518579
+radius = 0.798118
 
 [sub_resource type="PrismMesh" id="PrismMesh_arvlj"]
 left_to_right = 0.1
@@ -74,13 +79,13 @@ albedo_color = Color(1, 0, 0, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 script = ExtResource("1_yyfay")
 gun = NodePath("Head/Gun")
-gainRate = 0.1
-dampLock = 5.0
 thirdPersonCam = NodePath("Head/ThirdPerson")
 topDownCam = NodePath("TopDown")
 marker1 = NodePath("Marker1")
 aimGhost = NodePath("Head/Marker2Holder")
 UI = NodePath("UI")
+
+[node name="StatBlock" parent="." instance=ExtResource("7_4qjuj")]
 
 [node name="Head" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.748976, 0)
@@ -93,10 +98,10 @@ gravity_scale = 0.0
 angular_damp = 3.0
 
 [node name="Battery" type="MeshInstance3D" parent="Head"]
-transform = Transform3D(0.287852, -0.715905, -0.246416, -0.481622, 0.0302717, -0.650556, 0.584192, 0.377708, -0.414916, -0.1792, 0.23102, -0.23723)
+transform = Transform3D(0.559562, 0.433214, -0.394099, -0.481622, 0.0302717, -0.650556, -0.33321, 0.683746, 0.278499, -0.140252, 0.255057, 0.183962)
 material_override = ExtResource("5_4iogw")
 mesh = SubResource("BoxMesh_tjrqj")
-skeleton = NodePath("../../Body")
+skeleton = NodePath("../../Body2/Body")
 
 [node name="Fastener2" type="MeshInstance3D" parent="Head/Battery"]
 transform = Transform3D(-0.0380054, 0.0136817, -0.999184, 0.0173533, 0.999765, 0.0130291, 0.999128, -0.0168438, -0.0382344, -0.0289652, 0.000601858, 0.0297105)
@@ -105,6 +110,7 @@ mesh = SubResource("BoxMesh_7thmm")
 
 [node name="Gun" parent="Head" instance=ExtResource("1_8oxyt")]
 transform = Transform3D(3.0598e-08, -0.7, -6.11959e-08, -0.7, -3.0598e-08, 0, -2.67496e-15, 6.11959e-08, -0.7, 0, 0.186, 0)
+barrelExit = Vector3(0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Head"]
 shape = SubResource("SphereShape3D_28tdv")
@@ -124,30 +130,39 @@ mesh = SubResource("BoxMesh_c6crq")
 skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_nliy3")
 
-[node name="Body" type="MeshInstance3D" parent="."]
+[node name="Body2" type="RigidBody3D" parent="."]
+sleeping = true
+freeze = true
+
+[node name="Body" type="MeshInstance3D" parent="Body2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 material_override = ExtResource("1_jja0o")
 mesh = SubResource("CylinderMesh_g6vpc")
+skeleton = NodePath("../..")
 
-[node name="Battery2" type="MeshInstance3D" parent="Body"]
+[node name="Battery2" type="MeshInstance3D" parent="Body2/Body"]
 transform = Transform3D(1.27561e-09, -0.0196674, 1.91509, -1.45658, -4.29095e-08, -7.13434e-15, 6.36564e-08, -0.981458, -0.0383764, 0.134039, -0.101631, 0.41754)
 material_override = ExtResource("1_jja0o")
 mesh = SubResource("BoxMesh_qutll")
 
-[node name="Fastener" type="MeshInstance3D" parent="Body/Battery2"]
+[node name="Fastener" type="MeshInstance3D" parent="Body2/Body/Battery2"]
 transform = Transform3D(0.982113, -0.0101031, -0.110006, 0.0109282, 1.00119, 0.00725634, 0.114588, -0.00889077, 0.942149, -0.000803709, -0.0133975, 0.0139293)
 material_override = ExtResource("2_mapg7")
 mesh = SubResource("BoxMesh_lw8mc")
 
-[node name="Battery3" type="MeshInstance3D" parent="Body"]
+[node name="Battery3" type="MeshInstance3D" parent="Body2/Body"]
 transform = Transform3D(9.52628e-05, -0.0119047, -1.37192, -0.994786, -0.0166573, -1.91602e-09, -0.0115147, 1.43897, -0.0113501, -0.231159, -0.217316, -0.169929)
 material_override = ExtResource("1_jja0o")
 mesh = SubResource("BoxMesh_qutll")
 
-[node name="Fastener" type="MeshInstance3D" parent="Body/Battery3"]
+[node name="Fastener" type="MeshInstance3D" parent="Body2/Body/Battery3"]
 transform = Transform3D(0.998855, 0.047771, 0.00276424, -0.0478504, 0.997445, 0.0530533, -0.000222955, -0.0531251, 0.998589, 0.00169532, -0.00800586, -0.0085144)
 material_override = ExtResource("2_mapg7")
 mesh = SubResource("BoxMesh_lw8mc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.143221, 0)
+shape = SubResource("CylinderShape3D_c4ysj")
 
 [node name="Hitbox" type="Area3D" parent="."]
 

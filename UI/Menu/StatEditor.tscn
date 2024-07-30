@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bxii0qblq8t11"]
+
+[node name="VBoxContainer" type="VBoxContainer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -41.0
+offset_right = 226.0
+offset_bottom = 112.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 51
+text = "Stat Editor
+"
+scroll_active = false
+
+[node name="SpinBox" type="SpinBox" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -6.0
+max_value = 6.0
+step = 0.1
+allow_greater = true
+allow_lesser = true
+custom_arrow_step = 1.0

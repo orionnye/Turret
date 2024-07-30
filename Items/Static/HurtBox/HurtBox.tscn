@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://do30h8a345o4n"]
+
+[ext_resource type="Script" path="res://Items/Static/HurtBox/HurtBox.cs" id="1_ir6fa"]
+[ext_resource type="Material" uid="uid://0pfjs03j0ivv" path="res://Materials/UI/HurtBox.tres" id="2_2r3tf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bmydu"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_esiob"]
+
+[node name="HurtBox" type="Area3D"]
+script = ExtResource("1_ir6fa")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_bmydu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_esiob")
+surface_material_override/0 = ExtResource("2_2r3tf")

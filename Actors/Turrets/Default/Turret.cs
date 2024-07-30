@@ -6,20 +6,24 @@ using System.Collections.Generic;
 using System.Linq;
 
 public partial class Turret : Node3D {
-	[Export] public float fireRate = 1f;
 	[Export] public Gun gun;
 
 	public Timer timer;
+	public int health = 10;
+
+	public StatBlock stats = new StatBlock().Zero();
+	// Stat block
+	// [Export] public float fireRate = 1f;
+	// [Export] public float maxGain = 2;
+	// [Export] public float gainRate = 0.01f;
+	// [Export] public float dampLock = 30;
+	// [Export] public float dampPassive = 5;
+	// [Export] public float aimMargin = 0.2f;
 
 	// Rotation and controls
 	public float leftGain = 0;
 	public float rightGain = 0;
-	[Export] public float maxGain = 2;
-	[Export] public float gainRate = 0.01f;
-	[Export] public float dampLock = 30;
-	[Export] public float dampPassive = 5;
 
-	[Export] public float aimMargin = 0.2f;
 
 	// Access to Components 
 	public RigidBody3D head;
@@ -29,7 +33,6 @@ public partial class Turret : Node3D {
 
 	// Currency Control
 	public int glass = 10;
-	
 	// Debugging Flavor
 	[Export] public Node3D marker1;
 	[Export] public Node3D aimGhost;
@@ -53,10 +56,10 @@ public partial class Turret : Node3D {
 	// 		UI.fireRate.SetText(fireRate.ToString());
 	// 	}
 	// }
-	// public void SetGlass(int value) {
-	// 	glass = value;
-	// 	UI.glass.SetText(glass.ToString());
-	// }
+	public void SetGlass(int value) {
+		glass = value;
+		UI.glass.SetText(glass.ToString());
+	}
 	// public void SetCamera( Camera3D cam) {
 	// 	primaryCam = cam;
 	// 	cam.Current = true;
@@ -176,32 +179,34 @@ public partial class Turret : Node3D {
 		// Rotate Turret Right
 		if (!turnLeft) {
 			// GD.Print("Target Right");
-			rightGain += gainRate;
+			rightGain += stats.gainRate;
 			leftGain = 0;
 		}
 		// Rotate Turret Left
 		if (turnLeft) {
 			// GD.Print("Target Left");
-			leftGain += gainRate;
+			leftGain += stats.gainRate;
 			rightGain = 0;
 		}
 	}
 
 	// -----------Player Controls----------------
 	public void UserInput() {
-		head.AngularDamp = dampPassive;
+		if (stats.dampPassive >= 0) {
+			head.AngularDamp = stats.dampPassive;
+		}
 		if (Input.IsActionPressed("Left")) {
 			// Rotate Turret Left
-			if (leftGain <= maxGain) {
-				leftGain += gainRate;
+			if (leftGain <= stats.maxGain) {
+				leftGain += stats.gainRate;
 			}
 		} else if (Input.IsActionJustReleased("Left")) {
 			leftGain = 0;
 		}
 		if (Input.IsActionPressed("Right")) {
 			// Rotate Turret Right
-			if (rightGain <= maxGain) {
-				rightGain += gainRate;
+			if (rightGain <= stats.maxGain) {
+				rightGain += stats.gainRate;
 			}
 		} else if (Input.IsActionJustReleased("Right")) {
 			rightGain = 0;
@@ -213,15 +218,15 @@ public partial class Turret : Node3D {
 			torque.Y = 0;
 		}
 		if (Input.IsActionJustReleased("Right") && Input.IsActionJustReleased("Left")) {
-			leftGain = maxGain;
-			rightGain = maxGain;
+			leftGain = stats.maxGain;
+			rightGain = stats.maxGain;
 		}
 	}
 	public void MakeCurrent() {
 		// topDownCam.Current = false;
 		UI.Visible = true;
-		// topDownCam.MakeCurrent();
-		thirdPersonCam.MakeCurrent();
+		topDownCam.MakeCurrent();
+		// thirdPersonCam.MakeCurrent();
 	}
 	public void MakeInactive() {
 		
@@ -236,15 +241,15 @@ public partial class Turret : Node3D {
 		Unit target = GetClosestUnit();
 		if (target != null) {
 			trackUnit(target);
-		} else {
+		} else if (IsActive()){
 			UserInput();
 		}
 
 		// Actual Turret Default Controls
 		Vector3 torque = new Vector3(0, leftGain - rightGain, 0);
-		// UI.rightGain.SetText(rightGain.ToString());
-		// UI.leftGain.SetText(leftGain.ToString());
-		head.AngularDamp = dampPassive;
+		if (stats.dampPassive >= 0) {
+			head.AngularDamp = stats.dampPassive;
+		}
 		if (torque.Length() > 0) {
 			head.ApplyTorque(torque);
 		}
@@ -259,9 +264,18 @@ public partial class Turret : Node3D {
 			// Implement taking Damage and Health
 			// Die();
 		}
+		if (body.GetType() == typeof(Unit)) {
+			// body.QueueFree();
+			// Implement taking Damage and Health
+			// Die();
+		}
 		if (body.GetType() == typeof(Glass)) {
-			// UI.SetGlass(glass+1);
-			body.QueueFree();
+			// Check for debt, then resolve it by absorbing glass nearby
+			if (glass <= 0) {
+				// resolve debt
+				SetGlass(glass+1);
+				body.QueueFree();
+			}
 		}
 	}
 	private void _on_timer_timeout() {

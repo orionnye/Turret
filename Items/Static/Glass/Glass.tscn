@@ -17,6 +17,7 @@ radial_segments = 4
 rings = 1
 
 [node name="Glass" type="RigidBody3D" groups=["Glass"]]
+mass = 0.1
 script = ExtResource("2_hp54j")
 
 [node name="Area3D" type="Area3D" parent="."]

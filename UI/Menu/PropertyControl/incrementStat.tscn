@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5luocx6v0p1s"]
+
+[ext_resource type="Script" path="res://UI/Menu/PropertyControl/incrementStat.cs" id="1_213w4"]
+[ext_resource type="PackedScene" uid="uid://cvhc1gonggisn" path="res://UI/Icons/Generator/Icon.tscn" id="2_fxsse"]
+
+[node name="IncrementStat" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+alignment = 1
+script = ExtResource("1_213w4")
+max = 12
+
+[node name="Label" type="Label" parent="."]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Stat Title:"
+
+[node name="Icon" parent="." instance=ExtResource("2_fxsse")]
+layout_mode = 2
+
+[node name="IncrementButton" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " + "
+
+[node name="Cost" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "0
+"
+
+[connection signal="pressed" from="IncrementButton" to="." method="_on_increment_button_pressed"]

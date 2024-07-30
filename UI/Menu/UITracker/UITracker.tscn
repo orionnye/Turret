@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://c61awxhv4n2ii"]
+
+[ext_resource type="Texture2D" uid="uid://dvt30db83tlbu" path="res://Assets/images/WanringGlitchedGolem.png" id="1_6co21"]
+[ext_resource type="Script" path="res://UI/Menu/UITracker/UITracker.cs" id="1_46omy"]
+
+[node name="UITracker" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_46omy")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -68.0
+offset_right = 69.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_6co21")
+expand_mode = 1
+stretch_mode = 4
